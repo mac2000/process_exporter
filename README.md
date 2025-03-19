@@ -13,6 +13,52 @@ chmod +x process_exporter
 open http://localhost:9256/metrics
 ```
 
+To run in as a service create `~/Library/LaunchAgents/process_exporter`
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!-- Basic service information -->
+    <key>Label</key>
+    <string>process_exporter</string>
+
+    <!-- Start after system -->
+    <key>LimitLoadToSessionType</key>
+    <array>
+      <string>Aqua</string>
+      <string>Background</string>
+      <string>LoginWindow</string>
+      <string>StandardIO</string>
+      <string>System</string>
+    </array>
+
+    <!-- Command to execute and its arguments -->
+    <key>Program</key>
+    <string>/usr/local/bin/process_exporter</string> <!-- CHANGE ME -->
+
+    <!-- Run configuration -->
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Log files -->
+    <key>StandardOutPath</key>
+    <string>/path/to/stdout.log</string> <!-- CHANGE ME -->
+    <key>StandardErrorPath</key>
+    <string>/path/to/stderr.log</string> <!-- CHANGE ME -->
+  </dict>
+</plist>
+```
+
+and start it
+
+```bash
+launchctl load ~/Library/LaunchAgents/process_exporter
+```
+
 ## Metrics
 
 - `process_start_time_seconds` - timestamp of when service was started, useful for uptime widget
