@@ -59,6 +59,23 @@ and start it
 launchctl load ~/Library/LaunchAgents/process_exporter
 ```
 
+Prometheus may be configured like so
+
+```yaml
+global:
+  scrape_interval: 30s
+scrape_configs:
+  - job_name: 'process'
+    static_configs:
+      - targets: ['localhost:9256']
+```
+
+and to apply changes run:
+
+```bash
+curl -X POST localhost:9090/-/reload -i
+```
+
 ## Metrics
 
 - `process_start_time_seconds` - timestamp of when service was started, useful for uptime widget
@@ -75,7 +92,23 @@ launchctl load ~/Library/LaunchAgents/process_exporter
 
 ## Query samples
 
-TBD
+**cpu usage**
+
+```
+sum(rate(process_cpu_seconds_total{path="/Applications/Plex Media Server.app/Contents/MacOS/Plex Media Server"}[2m])) by (mode)
+```
+
+**memory usage**
+
+```
+process_resident_memory_bytes{path="/Applications/Plex Media Server.app/Contents/MacOS/Plex Media Server"}
+```
+
+**uptime**
+
+```
+process_start_time_seconds{path="/opt/homebrew/Cellar/traefik/3.3.4/bin/traefik"}
+```
 
 ## Build
 
