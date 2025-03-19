@@ -7,7 +7,7 @@ Oversimplified Prometheus process exporter built for MacOS
 ## Quick start
 
 ```bash
-wget https://github.com/mac2000/process_exporter/releases/download/v1.0.0/process_exporter
+wget https://github.com/mac2000/process_exporter/releases/download/v1.0.1/process_exporter
 chmod +x process_exporter
 ./process_exporter
 open http://localhost:9256/metrics
